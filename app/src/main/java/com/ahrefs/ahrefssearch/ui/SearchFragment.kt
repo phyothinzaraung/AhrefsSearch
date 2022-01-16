@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.*
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahrefs.ahrefssearch.R
 import com.ahrefs.ahrefssearch.databinding.FragmentSearchBinding
@@ -35,6 +36,7 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
 
         edtSearch = binding.edtSearch
 
+        //Search when text changes
         edtSearch.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -53,19 +55,30 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
 
         })
 
+        //Hide soft keyboard when search icon from soft keyboard is clicked
         edtSearch.setOnEditorActionListener { _, _, _ ->
             edtSearch.clearFocus()
             context?.hideKeyboard(binding.root)
             true
         }
 
+        //Close activity when back icon is clicked
         binding.imgBack.setOnClickListener {
             activity?.finish()
         }
 
+        //Clear text when cross icon is clicked
         binding.imgClose.setOnClickListener{
             edtSearch.text.clear()
         }
+
+        //add divder for recycler view items
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
         return binding.root
     }
@@ -97,6 +110,9 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
         when(view.id){
             R.id.imgDiagonal -> {
                 edtSearch.setText(searchKeyword)
+
+                //place the cursor at the end of text
+                edtSearch.setSelection(searchKeyword.length)
             }
         }
     }
