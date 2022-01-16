@@ -26,7 +26,7 @@ class SearchSuggestionAdapter(
 
     override fun getItemCount(): Int = searchSuggestion?.size!!
 
-    class SearchSuggestionViewHolder(val binding: LayoutSearchItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class SearchSuggestionViewHolder(private val binding: LayoutSearchItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(suggestion: String, listener: RecyclerViewClickListener){
 

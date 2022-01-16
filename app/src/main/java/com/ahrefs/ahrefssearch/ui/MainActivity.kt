@@ -15,17 +15,5 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        binding.apply {
-//            edtSearch.setOnEditorActionListener { textView, actionId, event ->
-//                edtSearch.clearFocus()
-//                supportFragmentManager.beginTransaction().replace(R.id.container, SearchFragment())
-//                    .commit()
-//                edtSearch.visibility = GONE
-//                true
-//            }
-//        }
-
-
     }
 }

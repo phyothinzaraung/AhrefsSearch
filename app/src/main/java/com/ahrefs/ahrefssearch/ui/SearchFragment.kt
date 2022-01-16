@@ -1,22 +1,17 @@
 package com.ahrefs.ahrefssearch.ui
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahrefs.ahrefssearch.R
@@ -26,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchFragment : Fragment(), RecyclerViewClickListener{
     lateinit var binding: FragmentSearchBinding
-    lateinit var adapter: SearchSuggestionAdapter
+    private lateinit var adapter: SearchSuggestionAdapter
     private lateinit var viewModel: SearchSuggestionViewModel
     private lateinit var edtSearch: EditText
 
@@ -58,19 +53,19 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
 
         })
 
-        edtSearch.setOnEditorActionListener { textView, actionId, event ->
+        edtSearch.setOnEditorActionListener { _, _, _ ->
             edtSearch.clearFocus()
             context?.hideKeyboard(binding.root)
             true
         }
 
-        binding.imgBack.setOnClickListener(View.OnClickListener {
+        binding.imgBack.setOnClickListener {
             activity?.finish()
-        })
+        }
 
-        binding.imgClose.setOnClickListener(View.OnClickListener {
+        binding.imgClose.setOnClickListener{
             edtSearch.text.clear()
-        })
+        }
 
         return binding.root
     }

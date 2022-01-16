@@ -31,11 +31,11 @@ class SearchSuggestionRepository @Inject constructor(private val api: SearchSugg
                             }
                             liveDataList.postValue(searchSuggestionList)
                         }catch (exception: JSONException){
-                            Log.d("searchTerm", data[i].toString())
+                            Log.d("exception", data[i].toString())
                         }
                     }
                 }else{
-                    Log.v("error", "error occurs")
+                    Log.e("error", "error occurs")
                 }
             }
 

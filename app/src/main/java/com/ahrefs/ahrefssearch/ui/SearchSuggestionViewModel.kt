@@ -10,7 +10,7 @@ class SearchSuggestionViewModel @Inject constructor(
     private val repository: SearchSuggestionRepository
 ): ViewModel() {
 
-    var liveDataList: MutableLiveData<List<String>> = MutableLiveData()
+    private var liveDataList: MutableLiveData<List<String>> = MutableLiveData()
 
     fun getLiveDataObserver(): MutableLiveData<List<String>> = liveDataList
 
