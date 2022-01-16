@@ -29,9 +29,3 @@
             android:layout_height="@dimen/icon_size"
             android:src="@drawable/diagonal"/>
     </LinearLayout>
-
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:background="@color/grey"-->
-<!--        android:layout_marginTop="@dimen/padding"/>-->
