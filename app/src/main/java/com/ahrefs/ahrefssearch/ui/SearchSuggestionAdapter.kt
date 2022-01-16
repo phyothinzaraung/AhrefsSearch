@@ -1,35 +1,39 @@
 package com.ahrefs.ahrefssearch.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ahrefs.ahrefssearch.R
-import com.google.android.material.textview.MaterialTextView
+import com.ahrefs.ahrefssearch.databinding.LayoutSearchItemBinding
 
-class SearchSuggestionAdapter: RecyclerView.Adapter<SearchSuggestionAdapter.SearchSuggestionViewHolder>() {
+class SearchSuggestionAdapter(
+    private val listener: RecyclerViewClickListener
+): RecyclerView.Adapter<SearchSuggestionAdapter.SearchSuggestionViewHolder>() {
 
-    private var searchSuggestion: List<String>? = listOf("Hello", "Hi")
+    private var searchSuggestion: List<String>? = null
 
     fun setSearchSuggestion(searchSuggestion: List<String>){
         this.searchSuggestion = searchSuggestion
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchSuggestionViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_search_item, parent, false)
-        return SearchSuggestionViewHolder(view)
+        val binding = LayoutSearchItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SearchSuggestionViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SearchSuggestionViewHolder, position: Int) {
-        holder.bind(searchSuggestion?.get(position)!!)
+        holder.bind(searchSuggestion?.get(position)!!, listener)
     }
 
     override fun getItemCount(): Int = searchSuggestion?.size!!
 
-    class SearchSuggestionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SearchSuggestionViewHolder(val binding: LayoutSearchItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(suggestion: String){
-            itemView.findViewById<MaterialTextView>(R.id.txtSuggestion).text = suggestion
+        fun bind(suggestion: String, listener: RecyclerViewClickListener){
+
+            binding.apply {
+                txtSuggestion.text = suggestion
+                imgDiagonal.setOnClickListener{listener.onRecyclerViewItemClick(imgDiagonal, suggestion)}
+            }
         }
     }
 }

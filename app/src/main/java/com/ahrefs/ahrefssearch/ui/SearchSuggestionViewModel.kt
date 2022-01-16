@@ -3,7 +3,6 @@ package com.ahrefs.ahrefssearch.ui
 import androidx.lifecycle.*
 import com.ahrefs.ahrefssearch.data.repository.SearchSuggestionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,5 +14,7 @@ class SearchSuggestionViewModel @Inject constructor(
 
     fun getLiveDataObserver(): MutableLiveData<List<String>> = liveDataList
 
-    fun loadSearchSuggestionData() = repository.getSearchSuggestion("a", "list", liveDataList)
+    var searchKeyword: String = ""
+
+    fun loadSearchSuggestionData() = repository.getSearchSuggestion(searchKeyword, "list", liveDataList)
 }

@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/custom_search_background.xml" value="0.1527777777777778" />
+        <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.11875" />
+        <entry key="app/src/main/res/drawable/shadow.xml" value="0.11875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12683304417364574" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.12537993920972645" />
         <entry key="app/src/main/res/layout/layout_search_item.xml" value="0.11854103343465046" />

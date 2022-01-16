@@ -2,13 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/padding"
+    android:layout_marginBottom="@dimen/padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/padding"
+        android:layout_marginBottom="@dimen/padding">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:src="@drawable/ic_search"
+        android:layout_alignParentLeft="true"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/txtSuggestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="abc"
-        android:layout_margin="@dimen/normal_text_size"/>
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/normal_margin"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgDiagonal"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/diagonal"
+            android:layout_marginEnd="@dimen/normal_margin"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_marginLeft="@dimen/normal_margin"
+        android:layout_marginRight="@dimen/normal_margin"
+        android:layout_marginTop="@dimen/padding"/>
 
 </LinearLayout>
