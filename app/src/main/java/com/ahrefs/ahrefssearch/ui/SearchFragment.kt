@@ -72,7 +72,7 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
             edtSearch.text.clear()
         }
 
-        //add divder for recycler view items
+        //add divider for recycler view items
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(
                 context,

@@ -51,8 +51,6 @@
                     android:layout_height="?attr/actionBarSize"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="@string/hint_text"
-                    android:textColorHint="@color/grey"
                     android:textSize="@dimen/title_text_size"
                     android:textColor="@color/text_color"
                     android:imeOptions="actionSearch"
