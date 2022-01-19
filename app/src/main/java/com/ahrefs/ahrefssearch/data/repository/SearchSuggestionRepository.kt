@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
+import kotlin.reflect.typeOf
 
 class SearchSuggestionRepository @Inject constructor(private val api: SearchSuggestionApi) {
 
@@ -21,19 +22,25 @@ class SearchSuggestionRepository @Inject constructor(private val api: SearchSugg
             ) {
                 if(response.isSuccessful) {
                     val data = JSONArray(response.body())
+                    val dataArr: JSONArray = data[1] as JSONArray
                     val searchSuggestionList = arrayListOf<String>()
-                    for(i in 0 until data.length()){
-                        try {
-                            val arrayText = JSONArray(data[i].toString())
-                            for (j in 0 until arrayText.length()){
-                                Log.d("Result", arrayText[j].toString())
-                                searchSuggestionList.add(arrayText[j].toString())
-                            }
-                            liveDataList.postValue(searchSuggestionList)
-                        }catch (exception: JSONException){
-                            Log.d("exception", data[i].toString())
-                        }
+                    for (i in 0 until dataArr.length()){
+                        searchSuggestionList.add(dataArr[i].toString())
                     }
+                    liveDataList.postValue(searchSuggestionList)
+
+//                    for(i in 0 until data.length()){
+//                        try {
+//                            val arrayText = JSONArray(data[i].toString())
+//                            for (j in 0 until arrayText.length()){
+//                                Log.d("Result", arrayText[j].toString())
+//                                searchSuggestionList.add(arrayText[j].toString())
+//                            }
+//                            liveDataList.postValue(searchSuggestionList)
+//                        }catch (exception: JSONException){
+//                            Log.d("exception", data[i].toString())
+//                        }
+//                    }
                 }else{
                     Log.e("error", "error occurs")
                 }
