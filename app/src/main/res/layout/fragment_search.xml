@@ -1,80 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.SearchFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <include
+        android:id="@+id/app_bar_layout"
+        layout="@layout/app_bar"/>
+    <include
+        android:id="@+id/empty_layout"
+        layout="@layout/layout_empty"/>
+    <include
+        android:id="@+id/recycler_view_layout"
+        layout="@layout/layout_recycler_view"/>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/normal_margin"
-                android:background="@drawable/custom_search_background"
-                android:orientation="horizontal"
-                android:weightSum="1">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgSearch"
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/padding"
-                    android:src="@drawable/ic_search" />
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:theme="@style/AppTheme.AppBarOverlay">-->
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgBack"
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/padding"
-                    android:src="@drawable/ic_arrow_back"
-                    android:visibility="gone"/>
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@android:color/white"-->
+<!--            app:popupTheme="@style/AppTheme.PopupOverlay">-->
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edtSearch"
-                    android:layout_width="0dp"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:textSize="@dimen/normal_text_size"
-                    android:textColor="@color/text_color"
-                    android:imeOptions="actionSearch"
-                    android:inputType="textNoSuggestions"
-                    android:padding="@dimen/padding"
-                    android:paddingStart="@dimen/normal_margin"
-                    android:paddingEnd="@dimen/normal_margin"/>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:layout_margin="@dimen/normal_margin"-->
+<!--                android:background="@drawable/custom_search_background"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="1">-->
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgClose"
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="@dimen/padding"
-                    android:src="@drawable/ic_close"
-                    android:visibility="gone" />
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+<!--                <androidx.appcompat.widget.AppCompatImageView-->
+<!--                    android:id="@+id/imgSearch"-->
+<!--                    android:layout_width="@dimen/icon_size"-->
+<!--                    android:layout_height="@dimen/icon_size"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginStart="@dimen/padding"-->
+<!--                    android:src="@drawable/ic_search" />-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/normal_margin" />
+<!--                <androidx.appcompat.widget.AppCompatImageView-->
+<!--                    android:id="@+id/imgBack"-->
+<!--                    android:layout_width="@dimen/icon_size"-->
+<!--                    android:layout_height="@dimen/icon_size"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginStart="@dimen/padding"-->
+<!--                    android:src="@drawable/ic_arrow_back"-->
+<!--                    android:visibility="gone"/>-->
+
+<!--                <androidx.appcompat.widget.AppCompatEditText-->
+<!--                    android:id="@+id/edtSearch"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="?attr/actionBarSize"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@null"-->
+<!--                    android:textSize="@dimen/normal_text_size"-->
+<!--                    android:textColor="@color/text_color"-->
+<!--                    android:imeOptions="actionSearch"-->
+<!--                    android:inputType="textNoSuggestions"-->
+<!--                    android:padding="@dimen/padding"-->
+<!--                    android:paddingStart="@dimen/normal_margin"-->
+<!--                    android:paddingEnd="@dimen/normal_margin"/>-->
+
+<!--                <androidx.appcompat.widget.AppCompatImageView-->
+<!--                    android:id="@+id/imgClose"-->
+<!--                    android:layout_width="@dimen/icon_size"-->
+<!--                    android:layout_height="@dimen/icon_size"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginEnd="@dimen/padding"-->
+<!--                    android:src="@drawable/ic_close"-->
+<!--                    android:visibility="gone" />-->
+<!--            </LinearLayout>-->
+<!--        </androidx.appcompat.widget.Toolbar>-->
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recyclerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_margin="@dimen/normal_margin" />-->
 
 </LinearLayout>

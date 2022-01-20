@@ -2,6 +2,7 @@ package com.ahrefs.ahrefssearch.ui
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +27,8 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
     private lateinit var adapter: SearchSuggestionAdapter
     private lateinit var viewModel: SearchSuggestionViewModel
     private lateinit var edtSearch: EditText
+    val SEARCH_TERM: String = "SEARCH_TERM"
+    val INTENT_EXTRA = "Search_Extra"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +38,18 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
 
         viewModel = ViewModelProvider(this)[SearchSuggestionViewModel::class.java]
 
-        edtSearch = binding.edtSearch
+        edtSearch = binding.appBarLayout.edtSearch
+
+        binding.recyclerViewLayout.recyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = SearchSuggestionAdapter(this)
+
+        //get data from activity via bundle
+        val bundle = arguments
+        val searchTerm = bundle!!.getString(SEARCH_TERM)
+        //set search term to search box
+        edtSearch.setText(searchTerm)
+        //search according to searchterm
+        search(viewModel, searchTerm.toString())
 
         //Search when text changes
         edtSearch.addTextChangedListener(object : TextWatcher{
@@ -47,9 +62,9 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
             override fun afterTextChanged(editable: Editable?) {
                 if(editable?.length!! > 0){
                     search(viewModel, editable.toString())
-                    binding.imgBack.visibility = View.VISIBLE
-                    binding.imgSearch.visibility = View.GONE
-                    binding.imgClose.visibility = View.VISIBLE
+                    binding.appBarLayout.imgBack.visibility = View.VISIBLE
+                    binding.appBarLayout.imgSearch.visibility = View.GONE
+                    binding.appBarLayout.imgClose.visibility = View.VISIBLE
                 }
             }
 
@@ -63,17 +78,22 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
         }
 
         //Close activity when back icon is clicked
-        binding.imgBack.setOnClickListener {
-            activity?.finish()
+        binding.appBarLayout.imgBack.setOnClickListener {
+//            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            var intent = Intent(activity, MainActivity::class.java)
+            intent.putExtra(INTENT_EXTRA, edtSearch.text.toString())
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
         }
 
         //Clear text when cross icon is clicked
-        binding.imgClose.setOnClickListener{
+        binding.appBarLayout.imgClose.setOnClickListener{
             edtSearch.text.clear()
+            binding.emptyLayout.txtEmpty.visibility = View.GONE
         }
 
         //add divider for recycler view items
-        binding.recyclerView.addItemDecoration(
+        binding.recyclerViewLayout.recyclerView.addItemDecoration(
             DividerItemDecoration(
                 context,
                 LinearLayoutManager.VERTICAL
@@ -86,19 +106,21 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
     private fun search(viewModel: SearchSuggestionViewModel, searchKeyword: String) {
 
         viewModel.searchKeyword = searchKeyword
-        viewModel.getLiveDataObserver().observe(viewLifecycleOwner, Observer {
-            if(it != null){
-                binding.recyclerView.layoutManager = LinearLayoutManager(context)
-                adapter = SearchSuggestionAdapter(this)
-                binding.recyclerView.adapter = adapter
-                adapter.setSearchSuggestion(it)
+        viewModel.getLiveDataObserver().observe(viewLifecycleOwner, Observer { result->
+            if(result != null){
+                binding.recyclerViewLayout.recyclerView.adapter = adapter
+                adapter.setSearchSuggestion(result)
+                if(result.isNotEmpty() && !edtSearch.text.isNullOrEmpty()) {
+                    binding.emptyLayout.txtEmpty.visibility = View.GONE
+                }else{
+                    binding.emptyLayout.txtEmpty.visibility = View.VISIBLE
+                }
             }else{
-                Toast.makeText(context, "error in retrieving data...", Toast.LENGTH_SHORT).show()
+                binding.emptyLayout.txtEmpty.visibility = View.VISIBLE
+                binding.emptyLayout.txtEmpty.text = "Error in retrieving data"
             }
         })
         viewModel.loadSearchSuggestionData()
-
-
     }
 
     private fun Context.hideKeyboard(view: View) {

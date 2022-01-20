@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AhrefsSearch</string>
     <string name="hint_text">Search</string>
+    <string name="no_search_data">No data for related search.</string>
 </resources>

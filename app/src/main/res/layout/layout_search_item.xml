@@ -10,6 +10,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size"
+        android:padding="@dimen/padding"
         android:src="@drawable/ic_search"/>
 
     <com.google.android.material.textview.MaterialTextView
@@ -27,5 +28,6 @@
             android:id="@+id/imgDiagonal"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
+            android:padding="5dp"
             android:src="@drawable/ic_diagonal"/>
     </LinearLayout>

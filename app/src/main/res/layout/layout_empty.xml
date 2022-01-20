@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/txtEmpty"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/normal_margin"
+    android:gravity="center"
+    android:text="@string/no_search_data"
+    android:textColor="@color/teal_200"
+    android:textSize="@dimen/small_text_size"
+    android:visibility="gone"/>
