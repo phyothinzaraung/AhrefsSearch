@@ -28,6 +28,6 @@
             android:id="@+id/imgDiagonal"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
-            android:padding="5dp"
+            android:padding="4dp"
             android:src="@drawable/ic_diagonal"/>
     </LinearLayout>
