@@ -1,21 +1,23 @@
 package com.ahrefs.ahrefssearch.data.repository
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.ahrefs.ahrefssearch.data.network.SearchSuggestionApi
 import org.json.JSONArray
-import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
-import kotlin.reflect.typeOf
 
 class SearchSuggestionRepository @Inject constructor(private val api: SearchSuggestionApi) {
+
+    private val tag = "Search"
 
     fun getSearchSuggestion(query: String, type: String, liveDataList: MutableLiveData<List<String>>) {
         val call: Call<List<Any>> = api.getSuggestions(query, type)
         call.enqueue(object : Callback<List<Any>> {
+            @SuppressLint("LongLogTag")
             override fun onResponse(
                 call: Call<List<Any>>,
                 response: Response<List<Any>>
@@ -28,26 +30,14 @@ class SearchSuggestionRepository @Inject constructor(private val api: SearchSugg
                         searchSuggestionList.add(dataArr[i].toString())
                     }
                     liveDataList.postValue(searchSuggestionList)
-
-//                    for(i in 0 until data.length()){
-//                        try {
-//                            val arrayText = JSONArray(data[i].toString())
-//                            for (j in 0 until arrayText.length()){
-//                                Log.d("Result", arrayText[j].toString())
-//                                searchSuggestionList.add(arrayText[j].toString())
-//                            }
-//                            liveDataList.postValue(searchSuggestionList)
-//                        }catch (exception: JSONException){
-//                            Log.d("exception", data[i].toString())
-//                        }
-//                    }
                 }else{
-                    Log.e("error", "error occurs")
+                    Log.e(tag, response.errorBody().toString())
                 }
             }
 
             override fun onFailure(call: Call<List<Any>>, t: Throwable) {
-                liveDataList.postValue(null)
+                Log.e(tag, t.message.toString())
+                //liveDataList.postValue(null)
             }
 
         })

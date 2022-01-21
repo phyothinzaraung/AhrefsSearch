@@ -9,7 +9,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +23,8 @@ class MainActivity : AppCompatActivity(), RecyclerViewClickListener {
     private lateinit var viewModel: SearchSuggestionViewModel
     private lateinit var adapter: SearchSuggestionAdapter
     private lateinit var edtSearch: EditText
-    lateinit var searchedString: String
+    private lateinit var searchedString: String
+    private var errorMessage: String = "Error in retrieving data"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewClickListener {
 
         //getIntent
         searchedString = intent?.getStringExtra(SearchFragment().INTENT_EXTRA).toString()
-        if(searchedString == "null"){
+        if(searchedString == "null" || searchedString.isEmpty()){
             edtSearch.setText("")
         }else{
             binding.mainLayout.visibility = View.VISIBLE
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewClickListener {
 
         })
 
-        edtSearch.setOnEditorActionListener { view, actionId, event ->
+        edtSearch.setOnEditorActionListener { view, actionId, _ ->
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
                 val mFragmentManager = supportFragmentManager
                 val mFragmentTransaction = mFragmentManager.beginTransaction()
@@ -105,14 +105,15 @@ class MainActivity : AppCompatActivity(), RecyclerViewClickListener {
             if(result != null ){
                 binding.recyclerViewLayout.recyclerView.adapter = adapter
                 adapter.setSearchSuggestion(result)
-                if(result.isNotEmpty() && !edtSearch.text.isNullOrEmpty()) {
+
+                if(result.isNotEmpty()) {
                     binding.emptyLayout.txtEmpty.visibility = View.GONE
                 }else{
                     binding.emptyLayout.txtEmpty.visibility = View.VISIBLE
                 }
             }else{
                 binding.emptyLayout.txtEmpty.visibility = View.VISIBLE
-                binding.emptyLayout.txtEmpty.text = "Error in retrieving data"
+                binding.emptyLayout.txtEmpty.text = errorMessage
             }
         })
         viewModel.loadSearchSuggestionData()
@@ -127,7 +128,6 @@ class MainActivity : AppCompatActivity(), RecyclerViewClickListener {
     private fun clearEditText(){
         binding.appBarLayout.imgClose.setOnClickListener{
             edtSearch.text.clear()
-            binding.emptyLayout.txtEmpty.visibility = View.GONE
         }
     }
 
@@ -135,7 +135,6 @@ class MainActivity : AppCompatActivity(), RecyclerViewClickListener {
         when(view.id){
             R.id.imgDiagonal -> {
                 edtSearch.setText(searchKeyword)
-
                 //place the cursor at the end of text
                 edtSearch.setSelection(searchKeyword.length)
             }

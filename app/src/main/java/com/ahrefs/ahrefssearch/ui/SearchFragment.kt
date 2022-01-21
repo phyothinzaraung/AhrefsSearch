@@ -12,8 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +27,7 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
     private lateinit var edtSearch: EditText
     val SEARCH_TERM: String = "SEARCH_TERM"
     val INTENT_EXTRA = "Search_Extra"
+    private var errorMessage: String = "Error in retrieving data"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +45,11 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
         //get data from activity via bundle
         val bundle = arguments
         val searchTerm = bundle!!.getString(SEARCH_TERM)
+
         //set search term to search box
         edtSearch.setText(searchTerm)
-        //search according to searchterm
+
+        //search according to search term
         search(viewModel, searchTerm.toString())
 
         //Search when text changes
@@ -79,8 +80,7 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
 
         //Close activity when back icon is clicked
         binding.appBarLayout.imgBack.setOnClickListener {
-//            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-            var intent = Intent(activity, MainActivity::class.java)
+            val intent = Intent(activity, MainActivity::class.java)
             intent.putExtra(INTENT_EXTRA, edtSearch.text.toString())
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
@@ -89,7 +89,6 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
         //Clear text when cross icon is clicked
         binding.appBarLayout.imgClose.setOnClickListener{
             edtSearch.text.clear()
-            binding.emptyLayout.txtEmpty.visibility = View.GONE
         }
 
         //add divider for recycler view items
@@ -110,14 +109,14 @@ class SearchFragment : Fragment(), RecyclerViewClickListener{
             if(result != null){
                 binding.recyclerViewLayout.recyclerView.adapter = adapter
                 adapter.setSearchSuggestion(result)
-                if(result.isNotEmpty() && !edtSearch.text.isNullOrEmpty()) {
+                if(result.isNotEmpty()) {
                     binding.emptyLayout.txtEmpty.visibility = View.GONE
                 }else{
                     binding.emptyLayout.txtEmpty.visibility = View.VISIBLE
                 }
             }else{
                 binding.emptyLayout.txtEmpty.visibility = View.VISIBLE
-                binding.emptyLayout.txtEmpty.text = "Error in retrieving data"
+                binding.emptyLayout.txtEmpty.text = errorMessage
             }
         })
         viewModel.loadSearchSuggestionData()

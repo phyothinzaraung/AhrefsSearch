@@ -16,13 +16,18 @@ class SearchSuggestionViewModel @Inject constructor(
     fun getLiveDataObserver(): MutableLiveData<List<String>> = liveDataList
 
     var searchKeyword: String = ""
-    var job: Job? = null
+
+    private lateinit var job: Job
 
     fun loadSearchSuggestionData() {
         job = CoroutineScope(Dispatchers.IO).launch {
             delay(1000)
             repository.getSearchSuggestion(searchKeyword, "list", liveDataList)
         }
+    }
 
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 }

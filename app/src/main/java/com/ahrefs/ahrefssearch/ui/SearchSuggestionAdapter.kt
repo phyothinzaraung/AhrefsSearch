@@ -9,7 +9,7 @@ class SearchSuggestionAdapter(
     private val listener: RecyclerViewClickListener
 ): RecyclerView.Adapter<SearchSuggestionAdapter.SearchSuggestionViewHolder>() {
 
-    private var searchSuggestion: List<String>? = null
+    private lateinit var searchSuggestion: List<String>
 
     fun setSearchSuggestion(searchSuggestion: List<String>){
         this.searchSuggestion = searchSuggestion
