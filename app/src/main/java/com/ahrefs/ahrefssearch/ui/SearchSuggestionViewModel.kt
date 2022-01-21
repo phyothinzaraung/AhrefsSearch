@@ -3,6 +3,7 @@ package com.ahrefs.ahrefssearch.ui
 import androidx.lifecycle.*
 import com.ahrefs.ahrefssearch.data.repository.SearchSuggestionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,6 +16,13 @@ class SearchSuggestionViewModel @Inject constructor(
     fun getLiveDataObserver(): MutableLiveData<List<String>> = liveDataList
 
     var searchKeyword: String = ""
+    var job: Job? = null
 
-    fun loadSearchSuggestionData() = repository.getSearchSuggestion(searchKeyword, "list", liveDataList)
+    fun loadSearchSuggestionData() {
+        job = CoroutineScope(Dispatchers.IO).launch {
+            delay(1000)
+            repository.getSearchSuggestion(searchKeyword, "list", liveDataList)
+        }
+
+    }
 }

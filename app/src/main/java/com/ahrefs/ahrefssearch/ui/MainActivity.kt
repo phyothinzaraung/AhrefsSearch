@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewClickListener {
             binding.mainLayout.visibility = View.VISIBLE
             edtSearch.setText(searchedString)
             edtSearch.setSelection(searchedString.length)
+            search(viewModel, searchedString)
         }
 
         edtSearch.addTextChangedListener(object: TextWatcher{
